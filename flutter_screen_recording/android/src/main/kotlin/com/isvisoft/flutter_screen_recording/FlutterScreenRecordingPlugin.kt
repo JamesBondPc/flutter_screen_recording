@@ -179,37 +179,55 @@ class FlutterScreenRecordingPlugin :
 
     private fun calculateResolution(metrics: DisplayMetrics) {
 
+        // mDisplayHeight = metrics.heightPixels
+        // mDisplayWidth = metrics.widthPixels
+
+        // var maxRes = 1280.0;
+        // if (metrics.scaledDensity >= 3.0f) {
+        //     maxRes = 1920.0;
+        // }
+        // if (metrics.widthPixels > metrics.heightPixels) {
+        //     var rate = metrics.widthPixels / maxRes
+
+        //     if (rate > 1.5) {
+        //         rate = 1.5
+        //     }
+        //     mDisplayWidth = maxRes.toInt()
+        //     mDisplayHeight = (metrics.heightPixels / rate).toInt()
+        //     println("Rate : $rate")
+        // } else {
+        //     var rate = metrics.heightPixels / maxRes
+        //     if (rate > 1.5) {
+        //         rate = 1.5
+        //     }
+        //     mDisplayHeight = maxRes.toInt()
+        //     mDisplayWidth = (metrics.widthPixels / rate).toInt()
+        //     println("Rate : $rate")
+        // }
+
+        // println("Scaled Density")
+        // println(metrics.scaledDensity)
+        // println("Original Resolution ")
+        // println(metrics.widthPixels.toString() + " x " + metrics.heightPixels)
+        // println("Calcule Resolution ")
+        // println("$mDisplayWidth x $mDisplayHeight")
         mDisplayHeight = metrics.heightPixels
         mDisplayWidth = metrics.widthPixels
 
-        var maxRes = 1280.0;
-        if (metrics.scaledDensity >= 3.0f) {
-            maxRes = 1920.0;
-        }
-        if (metrics.widthPixels > metrics.heightPixels) {
-            var rate = metrics.widthPixels / maxRes
+        val screenRatio = mDisplayWidth.toFloat() / mDisplayHeight.toFloat()
 
-            if (rate > 1.5) {
-                rate = 1.5
-            }
-            mDisplayWidth = maxRes.toInt()
-            mDisplayHeight = (metrics.heightPixels / rate).toInt()
-            println("Rate : $rate")
+        // 根据屏幕比例调整分辨率
+        if (mDisplayWidth > mDisplayHeight) {
+            mDisplayWidth = (mDisplayHeight * screenRatio).toInt()
         } else {
-            var rate = metrics.heightPixels / maxRes
-            if (rate > 1.5) {
-                rate = 1.5
-            }
-            mDisplayHeight = maxRes.toInt()
-            mDisplayWidth = (metrics.widthPixels / rate).toInt()
-            println("Rate : $rate")
+            mDisplayHeight = (mDisplayWidth / screenRatio).toInt()
         }
 
         println("Scaled Density")
         println(metrics.scaledDensity)
         println("Original Resolution ")
-        println(metrics.widthPixels.toString() + " x " + metrics.heightPixels)
-        println("Calcule Resolution ")
+        println("${metrics.widthPixels} x ${metrics.heightPixels}")
+        println("Calculated Resolution ")
         println("$mDisplayWidth x $mDisplayHeight")
     }
 
